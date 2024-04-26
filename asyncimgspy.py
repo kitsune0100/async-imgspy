@@ -1,9 +1,9 @@
 # coding: utf-8
 """
-imgspy
+async-imgspy
 ======
 
-imgspy finds the metadata (type, size) of an image given its url by fetching
+async-imgspy finds the metadata (type, size) of an image or a list of images asynchronously given its url by fetching
 as little as needed. This is a python implementation of `fastimage`_. Supports
 image types BMP, CUR, GIF, ICO, JPEG, PNG, PSD, TIFF, WEBP.
 
@@ -13,17 +13,11 @@ usage
 -----
 
 ::
-
-    >>> imgspy.info('http://via.placeholder.com/1920x1080')
-    {'type': 'png', 'width': 1920, 'height': 1080}
-    >>> with requests.get('http://via.placeholder.com/1920x1080', stream=True) as res:
-    ...     imgspy.info(res.raw)
-    {'type': 'png', 'width': 1920, 'height': 1080}
-    >>> imgspy.info('/path/to/image.jpg')
-    {'type': 'jpg', 'width': 420, 'height': 240}
-    >>> with open('/path/to/image.jpg') as f:
-    ...     imgspy.info(f)
-    {'type': 'jpg', 'width': 420, 'height': 240}
+    >>>
+    >>> asyncimgspy.info('http://via.placeholder.com/1920x1080')
+    >>> asyncimgspy.info('/path/to/image.jpg')
+    >>> async with open('/path/to/image.jpg') as f:
+    ...     asyncimgspy.info(f)
 """
 import asyncio
 import io
@@ -36,7 +30,7 @@ from typing import Any, List
 import aiofiles
 import aiohttp
 
-__version__ = '0.2.2'
+__version__ = '0.0.1'
 
 
 @contextlib.asynccontextmanager
@@ -56,13 +50,9 @@ async def openstream(input):
             yield io.BytesIO(base64.b64decode(parts[1][7:]))
 
 
-async def info(inputs: List[Any] | Any):
-    if isinstance(inputs, list):
-        streams = [item_info(item) for item in inputs]
-        return await asyncio.gather(*streams)
-    else:
-        print("in one time")
-        return await asyncio.gather(item_info(inputs))
+async def info(inputs):
+    streams = [item_info(item) for item in inputs] if isinstance(inputs, list) else [item_info(inputs)]
+    return await asyncio.gather(*streams)
 
 
 async def item_info(input):

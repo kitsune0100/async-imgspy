@@ -19,15 +19,16 @@ async def main():
     # sync test
     print(f"Sync Benchmark Test Start")
     start_time = time.time()
-    for item in items_to_process:
-        imgspy.info(item)
+    results = [imgspy.info(item) for item in items_to_process]
     end_time = time.time()
     print(f"Sync Benchmark Test End : {end_time - start_time}s")
+    print(f"Sync Results : {results}")
     # async test
     print(f"Async Benchmark Test Start")
     start_time = time.time()
-    results = await asyncimgspy.info(items_to_process)
+    async_results = await asyncimgspy.info(items_to_process)
     end_time = time.time()
+    print(f"Async Results : {async_results}")
     print(f"Async Benchmark Test End : {end_time - start_time}s")
 
 
