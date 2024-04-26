@@ -26,7 +26,6 @@ import sys
 import base64
 import struct
 import contextlib
-from typing import Any, List
 import aiofiles
 import aiohttp
 
