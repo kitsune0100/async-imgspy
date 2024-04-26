@@ -1,24 +1,4 @@
-# coding: utf-8
-"""
-async-imgspy
-======
 
-async-imgspy finds the metadata (type, size) of an image or a list of images asynchronously given its url by fetching
-as little as needed. This is a python implementation of `fastimage`_. Supports
-image types BMP, CUR, GIF, ICO, JPEG, PNG, PSD, TIFF, WEBP.
-
-.. _fastimage: https://github.com/sdsykes/fastimage
-
-usage
------
-
-::
-    >>>
-    >>> asyncimgspy.info('http://via.placeholder.com/1920x1080')
-    >>> asyncimgspy.info('/path/to/image.jpg')
-    >>> async with open('/path/to/image.jpg') as f:
-    ...     asyncimgspy.info(f)
-"""
 import asyncio
 import io
 import os
@@ -28,8 +8,6 @@ import struct
 import contextlib
 import aiofiles
 import aiohttp
-
-__version__ = '0.0.1'
 
 
 @contextlib.asynccontextmanager
